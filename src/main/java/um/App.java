@@ -21,21 +21,23 @@ public class App {
      * 
      * for문으로 모든 페이지를 돌면서 호출 반복.
      * 
-     * i = 46부터 데이터가 없으므로 exception이 발생하는게 정상임.
+     * i = 46부터 데이터가 없으므로 exception이 발생하는게 정상임. 확인차 46까지 설정
      */
     public static void example1() {
         String SERVICE_KEY = "X81j%2BTvf6SUFXbZ3SYoTretkd5c7Q7xz7jn9VIIzXyVZCpEh8bNNbEn4Zvkelg0W7E4COM9byuVm7gXLA14Ocw%3D%3D";
-        String BASE_URL = "https://www.fact.or.kr/openapi/service/patentInfo/patentInfoList";
+        String BASE_URL = "https://www.fact.or.kr/openapi/service/farmTech/farmTechView";
+        String ITEM_TAG = "item";
+
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("pageNo", "");
+        parameters.put("seq", "");
 
         MyApiDownloader downloader = new MyApiDownloader(SERVICE_KEY);
 
-        for (int i = 1; i <= 47; i++) {
+        for (int i = 1; i <= 46; i++) {
             System.out.println(String.format("[%d] ...", i));  // exception 발생 시 어느 구간인지 확인하기 위한 표시점
             
-            parameters.put("pageNo", Integer.toString(i));
-            downloader.downloadApi(BASE_URL, parameters);
+            parameters.put("seq", Integer.toString(i));
+            downloader.downloadApi(BASE_URL, parameters, ITEM_TAG);
         }
     }
 
@@ -55,7 +57,9 @@ public class App {
      */
     public static void example2() {
         String SERVICE_KEY = "X81j%2BTvf6SUFXbZ3SYoTretkd5c7Q7xz7jn9VIIzXyVZCpEh8bNNbEn4Zvkelg0W7E4COM9byuVm7gXLA14Ocw%3D%3D";
-        String BASE_URL = "https://www.fact.or.kr/openapi/service/farmMachine/farmMachineView2";
+        String BASE_URL = "https://www.fact.or.kr/openapi/service/farmMachine/farmMachineView1";
+        String itemTag = "item";
+
         Map<String, String> parameters = new HashMap<>();
         parameters.put("RCPNO", "");
 
@@ -66,7 +70,7 @@ public class App {
             System.out.println(String.format("[%s] ...", code));  // exception 발생 시 어느 구간인지 확인하기 위한 표시점
             
             parameters.put("RCPNO", code);
-            downloader.downloadApi(BASE_URL, parameters);
+            downloader.downloadApi(BASE_URL, parameters, itemTag);
         }
     }
 }

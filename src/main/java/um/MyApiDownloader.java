@@ -36,10 +36,10 @@ public class MyApiDownloader {
         }
     }
 
-    public boolean downloadApi(String baseUrl, Map<String, String> parameters) {
+    public boolean downloadApi(String baseUrl, Map<String, String> parameters, String itemTag) {
         try {
             String tblName = makeTblNameWithUrl(baseUrl);
-            String[][][] data = requestGet(baseUrl, parameters);
+            String[][][] data = requestGet(baseUrl, parameters, itemTag);
             String query = makeSqlInsert(tblName, data);
 
             executeQueryToDb(query);
@@ -114,9 +114,9 @@ public class MyApiDownloader {
         return doc;
     }
 
-    private String[][][] convertXmlToStrArr(Document doc) {
+    private String[][][] convertXmlToStrArr(Document doc, String itemTag) {
         doc.getDocumentElement().normalize();
-        NodeList nList = doc.getElementsByTagName("item");
+        NodeList nList = doc.getElementsByTagName(itemTag);
         String[][][] ret = new String[nList.getLength()][][];
 
         for (int i = 0; i < nList.getLength(); i++) {
@@ -137,7 +137,7 @@ public class MyApiDownloader {
     /*
      * reference: 공공데이터포털 제공 샘플 코드
      */
-    private String[][][] requestGet(String baseUrl, Map<String, String> parameters) {
+    private String[][][] requestGet(String baseUrl, Map<String, String> parameters, String itemTag) {
         StringBuilder sb = new StringBuilder();
 
         BufferedReader rd = null;
@@ -165,7 +165,7 @@ public class MyApiDownloader {
             e.printStackTrace();
         }
 
-        return convertXmlToStrArr(convertStringToXml(sb.toString()));
+        return convertXmlToStrArr(convertStringToXml(sb.toString()), itemTag);
     }
 
     private String makeSqlAddColsIfNotExists(String tableName, String[][][] data) {
