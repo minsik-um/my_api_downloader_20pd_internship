@@ -57,8 +57,8 @@ public class App {
      */
     public static void example2() {
         String SERVICE_KEY = "X81j%2BTvf6SUFXbZ3SYoTretkd5c7Q7xz7jn9VIIzXyVZCpEh8bNNbEn4Zvkelg0W7E4COM9byuVm7gXLA14Ocw%3D%3D";
-        String BASE_URL = "https://www.fact.or.kr/openapi/service/farmMachine/farmMachineView1";
-        String itemTag = "item";
+        String BASE_URL = "https://www.fact.or.kr/openapi/service/farmMachine/farmMachineView2";
+        String ITEM_TAG = "item";
 
         Map<String, String> parameters = new HashMap<>();
         parameters.put("RCPNO", "");
@@ -67,10 +67,10 @@ public class App {
         List<String> codes = downloader.getDistinctValues("RCPNO", "wwwfactorkr_farmmachinelist");
 
         for (String code : codes) {
-            System.out.println(String.format("[%s] ...", code));  // exception 발생 시 어느 구간인지 확인하기 위한 표시점
+            System.out.println(String.format("[%s] ...", code));
             
             parameters.put("RCPNO", code);
-            downloader.downloadApi(BASE_URL, parameters, itemTag);
+            downloader.downloadApi(BASE_URL, parameters, ITEM_TAG);
         }
     }
 }

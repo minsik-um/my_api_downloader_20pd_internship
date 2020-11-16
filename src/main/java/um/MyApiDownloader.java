@@ -114,6 +114,9 @@ public class MyApiDownloader {
         return doc;
     }
 
+    /**
+     * @return document 데이터 중에서 DB에 넣을 row 데이터만 (itemTag에 따라) 추출해 반환
+     */
     private String[][][] convertXmlToStrArr(Document doc, String itemTag) {
         doc.getDocumentElement().normalize();
         NodeList nList = doc.getElementsByTagName(itemTag);
@@ -202,6 +205,12 @@ public class MyApiDownloader {
         return builder.toString();
     }
 
+    /**
+     * @return insert 쿼리의 모음 텍스트를 반환
+     * 
+     * insert 문이 성공하기 위해
+     * create문과 column add 문을 앞에 추가해줌
+     */
     private String makeSqlInsert(String tableName, String[][][] data) {
         StringBuilder allBuilder = new StringBuilder();
         allBuilder.append(makeSqlCreateTbl(tableName, data));
